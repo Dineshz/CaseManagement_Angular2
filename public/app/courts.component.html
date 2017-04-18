@@ -1,0 +1,86 @@
+<div *ngIf="isLoading" class="progress">
+ <div class="indeterminate"></div>
+</div>
+<br>
+<form (ngSubmit)="onSubmit()">
+ <table>
+  <tbody>
+   <tr>
+    <td>
+      <div class="input-field inline">
+        <input id="title" placeholder="Court" [(ngModel)]="court.title" type="text" name="title" required>
+        <!-- <label for="title">Court</label> -->
+      </div>
+    </td>
+    <td>
+      <div class="input-field inline">
+        <input id="shorttext"  placeholder="Short Text" [(ngModel)]="court.shorttext" type="text" name="shorttext" required>
+        <!-- <label for="shorttext">Short Text</label> -->
+      </div>
+    </td>
+    <td>
+      <div class="input-field inline">
+        <input id="ptitle"  placeholder="Petitioner" [(ngModel)]="court.ptitle" type="text" name="ptitle" required> 
+        <!-- <label for="ptitle">Petitioner</label> -->
+      </div>
+    </td>
+    <td>
+      <div class="input-field inline">
+        <input id="dtitle"  placeholder="Defendant" [(ngModel)]="court.dtitle" type="text" name="dtitle" required>
+        <!-- <label for="dtitle">Defendant</label> -->
+      </div>
+    </td>
+    <td>
+      <button id ='submitbtn' type="submit" class="btn-floating btn-large waves-effect waves-light green">
+        <i class="large material-icons">done</i>
+      </button>
+    </td>
+    <td *ngIf="court._id">
+      <button id="cancelbtn"  (click)="clearData(); $event.preventDefault()" class="btn-floating btn-large red waves-effect waves-light ">
+        <i class="large material-icons">close</i>
+      </button>
+    </td>
+  </tr>
+</tbody>
+</table>
+</form>
+<br>
+<div class="container" class="s12" align="center">
+  <table class="highlight">
+    <thead>
+      <tr>
+        <th data-field="title">Court</th>
+        <th data-field="shorttext">Short Text</th>
+        <th data-field="ptitle">Petitioner</th>
+        <th data-field="dtitle">Defendant</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+
+    <tbody>
+     <tr *ngFor="let court of courts">
+      <td>{{court.title}}</td>
+      <td>{{court.shorttext}}</td>
+      <td>{{court.ptitle}}</td>
+      <td>{{court.dtitle}}</td>
+      <td>
+        <a href="#" (click)="onEdit(court)">
+          <i class="material-icons black-text">mode_edit</i>
+        </a>
+      </td>
+      <td>
+        <a href="#" (click)="onDelete(court)">
+          <i class="material-icons">delete</i>
+        </a>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<select>
+  <option *ngFor="let court of courts">{{court.title}}</option>
+</select>
+
+</div>
