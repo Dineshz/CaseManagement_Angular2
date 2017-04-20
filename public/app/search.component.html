@@ -1,25 +1,115 @@
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
-<h1>Search</h1>
+<form (ngSubmit)="onSubmit()">
+	<input type="text" name="search" [(ngModel)]="searchstr" >
+	<button id ='submitbtn' type="submit">Search</button>
+</form>
+<br>
+<div>
+	<table [hidden]="dispdetail">
+		<tr>
+			<th>Case Type</th>
+			<th>Case No.</th>
+			<th>Year</th>
+			<th>Petitioner</th>
+			<th>Respondent</th>
+			<th></th>
+		</tr>
+		<tr *ngFor="let qcase of cases">
+			<td>{{qcase.type}}</td>
+			<td>{{qcase.id}}</td>
+			<td>{{qcase.year}}</td>
+			<td>{{qcase.petitioner}}</td>
+			<td>{{qcase.defendant}}</td>
+			<td><button (click)="onSelect(qcase)">View Detail</button></td>
+		</tr>
+	</table>
+</div>
+<div [hidden]="!dispdetail" >
+<table>
+	<tr>
+		<td>
+			<h4>Details</h4>
+		</td>
+		<td>
+			<button (click)="goBack()">Back</button>
+		</td>
+		<td>
+			<button (click)="updateCase(selcase)">Update</button>
+		</td>
+	</tr>
+	<tr>
+		<td>Status of Case</td>
+		<td>{{selcase.status}}</td>
+	</tr>
+	<tr>
+		<td>Case Type</td>
+		<td>{{selcase.type}}</td>
+	</tr>
+	<tr>
+		<td>Case Number</td>
+		<td>{{selcase.id}}</td>
+	</tr>
+	<tr>
+		<td>Dairy Number</td>
+		<td>{{selcase.dairy_no}}</td>
+	</tr>
+	<tr>
+		<td>Year</td>
+		<td>{{selcase.year}}</td>
+	</tr>
+	<tr>
+		<td>Petitioner</td>
+		<td>{{selcase.petitioner}}</td>
+	</tr>
+	<tr>
+		<td>Respondent</td>
+		<td>{{selcase.defendant}}</td>
+	</tr>
+	<tr>
+		<td>Petitioner Advocate</td>
+		<td>{{selcase.petadvocate}}</td>
+	</tr>
+	<tr>
+		<td>Respondent Advocate</td>
+		<td>{{selcase.defadvocate}}</td>
+	</tr>
+	<tr>
+		<td>Subject</td>
+		<td>{{selcase.subject}}</td>
+	</tr>
+	<tr>
+		<td>Jury</td>
+		<td>{{selcase.judge}}</td>
+	</tr>
+	<tr>
+		<td>Judgement</td>
+		<td>{{selcase.judgement}}</td>
+	</tr>
+	<tr>
+		<td>Hearings</td>
+		<td>Date</td>
+		<td>Comment</td>
+	</tr>
+	<tr *ngFor="let hear of selcase.hearings">
+		<td></td>
+		<td>{{hear.date}}</td>
+		<td>{{hear.comment}}</td>
+	</tr>
+	<tr [hidden]="viewatt">
+		<td>
+			<button (click)="viewAtt(selcase)">View Attachments</button>
+		</td>
+	</tr>
+	<div [hidden]="!viewatt">
+	<tr>
+		<td>Attachments</td>
+
+	</tr>
+		<tr *ngFor="let pdfs of selcase.pdf">
+			
+			<td>
+				<a [href]="pdfs.blobUrl" download="{{pdfs.filename}}">{{pdfs.filename}}</a>
+			</td>
+		</tr>
+	</div>
+</table>
+</div>

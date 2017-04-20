@@ -47,7 +47,7 @@ export class AddCaseComponent implements OnInit {  //, DoCheck,
       lastupdated : '',
       hearings : [],
       judgement : '',
-      pdf : ''
+      pdf : []
     };
     this.court = {
       
@@ -90,9 +90,30 @@ export class AddCaseComponent implements OnInit {  //, DoCheck,
     console.log("onSubmit");
     // console.log(this.case);
     this.caseService.addCase(this.case).subscribe(xcase => console.log(xcase));
-
+    this.clear();
   }
   
+  clear(){
+    this.case = {
+      court : '',
+      type : '',
+      id : '',
+      dairy_no : '',
+      year : new Date().getFullYear(),
+      petitioner : '',
+      defendant : '',
+      client : '',
+      defadvocate : '',
+      petadvocate : '',
+      subject : '',
+      status : '',
+      judge : '',
+      lastupdated : '',
+      hearings : [],
+      judgement : '',
+      pdf : []
+    };
+  } 
   getCourts(){
     // setTimeout(() => {
     console.log("getCourts called!");
@@ -119,24 +140,26 @@ export class AddCaseComponent implements OnInit {  //, DoCheck,
 
 
   public fileChangeEvent(fileInput: any){
-   
-      if (fileInput.target.files && fileInput.target.files[0]) {
         this.isFileUploaded = false;
-        this.getBase64(fileInput.target.files[0]);
-    }
+        for(var i=0;i<fileInput.target.files.length;i++){
+          this.getBase64(fileInput.target.files[i]);  
+        }
+        this.isFileUploaded = true;
+    
 }
 
   getBase64(file: any) {
+    console.log("inside getBase64");
+    console.log(file);
    var reader = new FileReader();
-   var str = "";
+   var pdf = {filename:'',base64:''};
    var myReader:FileReader = new FileReader();
   myReader.onloadend = (e) => {
-    str = myReader.result;
-    this.case.pdf = str;
-    this.isFileUploaded = true;
+    pdf.filename = file.name;
+    pdf.base64 = myReader.result;
+    this.case.pdf.push(pdf);
   }
   myReader.readAsDataURL(file);
-  
 }
 
   // fileChangeEvent(fileInput: any){

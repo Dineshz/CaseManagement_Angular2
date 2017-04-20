@@ -63,8 +63,39 @@ router.get('/xcases', function(req, res){
 			if(err) res.send(console.log(err));
 			res.send(lcase);
 		});
+	}else if(req.query.regex){
+		var re = new RegExp(req.query.regex, 'i');
+		var _or = [
+			{  'type': 			{ $regex: re }   },
+			// {  'id': 			{ $regex: re }   },
+			{  'dairy_no': 		{ $regex: re }   },
+			// {  'year': 			req.query.regex  },
+			{  'petitioner': 	{ $regex: re }   },
+			{  'defendant': 	{ $regex: re }   },
+			{  'client': 		{ $regex: re }   },
+			{  'petadvocate': 	{ $regex: re }   },
+			{  'defadvocate': 	{ $regex: re }   },
+			{  'subject': 		{ $regex: re }   },
+			{  'status': 		{ $regex: re }   },
+			{  'judge': 		{ $regex: re }   },
+			// {  'lastupdated': 	{ $regex: re }   },
+			{  'hearings.date': 		{ $regex: re }   },
+			{  'hearings.comment': 		{ $regex: re }   },
+			{  'judgement': 	{ $regex: re }   },
+			// {  'pdf': 			{ $regex: re }   },
+			{  'court': 		{ $regex: re }   }
+		];
+
+		if (/^\d+$/.test(req.query.regex)) {
+			_or.push({  'year': req.query.regex  });
+		}
+
+		Case.find({},{pdf:0}).or(_or).exec(function(err,xcases){
+			if(err) res.send(console.log(err));
+			res.send(xcases);
+		});
 	}else{
-		Case.find(function(err, cases){
+		Case.find({},{pdf:0},function(err, cases){
 			if(err) res.send(console.log(err));
 			res.send(cases);
 		});

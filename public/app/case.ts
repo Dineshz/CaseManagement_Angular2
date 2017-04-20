@@ -1,4 +1,5 @@
 export interface Case {
+  _id?:string;
   type?: string;
   id: string;
   dairy_no?: string;
@@ -14,6 +15,6 @@ export interface Case {
   lastupdated: string;
   hearings?: any[];
   judgement?: string;
-  pdf?: string;
+  pdf?: any[];
   court: string;
 }
