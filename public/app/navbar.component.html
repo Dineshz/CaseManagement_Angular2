@@ -1,12 +1,45 @@
 
-<!-- <ul id="slide-out" class="side-nav fixed"> -->
-
-<ul style="width:250px; margin-top:65px;" id="slide-out" class="side-nav fixed">
-  <li routerLinkActive="active" ><a href="#"  routerLink="search">Search</a></li>
-  <li routerLinkActive="active" ><a href="#"  routerLink="managecases">Manage Case</a></li>
-  <li routerLinkActive="active" ><a href="#"  routerLink="courts">Courts</a></li>
-</ul>
-
-
+<header class="main-header">
+    <!-- Logo -->
+    <a href="#" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>CM</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Case</b>Management</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+    </nav>
+  </header>
+    <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+        <li class="header">Menu</li>
+        <li routerLinkActive="active" class="active treeview">
+          <a href="#" routerLink="search">
+             <i class="fa fa-search"></i><span>Search</span>
+          </a>
+        </li>
+       	<li routerLinkActive="active" class="treeview">
+          <a href="#" routerLink="managecases">
+             <i class="fa fa-plus"></i><span>Add Case</span>
+          </a>
+        </li>
+        <li routerLinkActive="active" class=" treeview">
+          <a href="#" routerLink="courts">
+             <i class="fa fa-gavel"></i><span>Courts</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside> 
 
 <!-- <a href="#" data-activates="slide-out" class="button-collapse" ><i class="material-icons">menu</i></a> -->

@@ -67,7 +67,7 @@ router.get('/xcases', function(req, res){
 		var re = new RegExp(req.query.regex, 'i');
 		var _or = [
 			{  'type': 			{ $regex: re }   },
-			// {  'id': 			{ $regex: re }   },
+			{  'id': 			{ $regex: re }   },
 			{  'dairy_no': 		{ $regex: re }   },
 			// {  'year': 			req.query.regex  },
 			{  'petitioner': 	{ $regex: re }   },

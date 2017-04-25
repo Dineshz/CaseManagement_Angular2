@@ -56,10 +56,11 @@ export class CourtsComponent implements OnInit {
   	this.courtsService.getCourts().subscribe(courts => {
   		this.isLoading = false;
   		this.courts = courts;
+      console.log("executed");
   	});
   }
   clearData(){
-    console.log('inside');
+    
     this.court = {
       _v:0,
       _id:'',

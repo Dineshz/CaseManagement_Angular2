@@ -15,7 +15,7 @@ import {UpdateCaseService} from './updatecase.service';
 })
 
 export class AddCaseComponent implements OnInit, OnDestroy {  //, DoCheck, 
-  
+  max_year : number;
   case : Case;
   court : Court;
   courts : Court[];
@@ -31,7 +31,7 @@ export class AddCaseComponent implements OnInit, OnDestroy {  //, DoCheck,
   constructor(private courtsService: CourtsService, 
               private caseService: CaseService,
               private updateCaseService: UpdateCaseService) {
-
+    this.max_year = new Date().getFullYear();
     this.case = this.updateCaseService.value;
     console.log(this.case);
     this.court = {

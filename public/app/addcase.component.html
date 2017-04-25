@@ -1,129 +1,235 @@
-<br>
-<div>
-  <form (ngSubmit)="onSubmit()">
+
+<!-- 
+<div class="box">
+  <div>
+    <form (ngSubmit)="onSubmit()">
+      <div class="row">
+
+        <select name="case_court" [(ngModel)]="case.court">
+          <option *ngFor="let court of courts" [ngValue]="court.shorttext">{{court.title}}
+          </option>
+        </select>
+      </div>
+
+      <div class="row">
+       <div class="input-field col s6">
+         <input name="case_type" placeholder="Case Type" [(ngModel)]="case.type" type="text" class="validate">
+       </div>
+     </div>
+     <div class="row">
+       <div class="input-field col s4">
+         <input name="case_id" placeholder="Case No." [(ngModel)]="case.id" type="text" class="validate">
+       </div>
+       <div class="input-field col s4">
+         <input name="case_dairy_no" placeholder="Dairy No." [(ngModel)]="case.dairy_no" type="text" class="validate">
+       </div>
+       <div class="input-field col s4">
+         <input name="case_year" placeholder="Year" [(ngModel)]="case.year" type="number" class="validate" min="1900" max="{{case.year}}">
+       </div>
+     </div>
+
+     <div class="row">
+       <div class="input-field col s6">
+         <input name="case_petitioner" placeholder="{{court.ptitle}}" [(ngModel)]="case.petitioner" type="text" class="validate">
+       </div>
+       <div class="input-field col s6">
+         <input name="case_defendant" placeholder="{{court.dtitle}}" [(ngModel)]="case.defendant" type="text" class="validate">
+       </div>
+     </div>
+
+     <div class="row">
+       <div class="input-field col s6">
+         <select id="client" name="case_client" [(ngModel)]="case.client">
+          <option value="" disabled selected>Choose client</option>
+          <option value="{{case.petitioner}}">{{case.petitioner}}</option>
+          <option value="{{case.defendant}}">{{case.defendant}}</option>
+        </select>
+      </div>
+    </div>
     <div class="row">
-     <!-- <div class="input-field col s12"> -->
-      <!-- <select id="case_court" name="case_court">
-        <option value="" disabled selected>Select Court</option>
-        <option *ngFor="let court of courts" value="{{court.shorttext}}">
-          {{court.title}}
-        </option>
-      </select> -->
-      
-      <select name="case_court" [(ngModel)]="case.court">
-    <option *ngFor="let court of courts" [ngValue]="court.shorttext">{{court.title}}
-    </option>
-    </select>
-    
-    <!-- </div> -->
+     <div class="input-field col s6">
+       <input name="case_petadvocate" [(ngModel)]="case.petadvocate" placeholder="Petitioner Advocate" type="text" class="validate">
+     </div>
+     <div class="input-field col s6">
+       <input name="case_petdefendant" [(ngModel)]="case.defadvocate" placeholder="Defendant Advocate" type="text" class="validate">
+     </div>
+   </div>
+   <div class="row">
+     <div class="input-field col s6">
+       <input name="case_subject" [(ngModel)]="case.subject" placeholder="Subject" type="text" class="validate">
+     </div>
+     <div class="input-field col s6">
+       <input name="case_status" [(ngModel)]="case.status" placeholder="Status" type="text" class="validate">
+     </div>
+   </div>
+
+   <div class="row">
+     <div class="input-field col s6">
+       <input name="case_judge" [(ngModel)]="case.judge" placeholder="Judge" type="text" class="validate">
+     </div>
+   </div>
+
+
+   <div class="row">
+     <button class="btn-floating btn-large waves-effect waves-light red" (click)="addHearing(); $event.preventDefault()">
+      <i class="fa fa-plus">Add Hearing</i>
+    </button>
+
   </div>
-  
-  <div class="row">
-   <div class="input-field col s6">
-     <input name="case_type" placeholder="Case Type" [(ngModel)]="case.type" type="text" class="validate">
-   </div>
- </div>
- <div class="row">
-   <div class="input-field col s4">
-     <input name="case_id" placeholder="Case No." [(ngModel)]="case.id" type="text" class="validate">
-   </div>
-   <div class="input-field col s4">
-     <input name="case_dairy_no" placeholder="Dairy No." [(ngModel)]="case.dairy_no" type="text" class="validate">
-   </div>
-   <div class="input-field col s4">
-     <input name="case_year" placeholder="Year" [(ngModel)]="case.year" type="number" class="validate" min="1900" max="{{case.year}}">
-   </div>
- </div>
 
- <div class="row">
-   <div class="input-field col s6">
-     <input name="case_petitioner" placeholder="{{court.ptitle}}" [(ngModel)]="case.petitioner" type="text" class="validate">
-   </div>
-   <div class="input-field col s6">
-     <input name="case_defendant" placeholder="{{court.dtitle}}" [(ngModel)]="case.defendant" type="text" class="validate">
-   </div>
- </div>
+  <div class="hearings_rows" >
+    <div class="row" *ngFor="let hear of case.hearings; let i = index">
+     <div class="input-field col s5">
+       <input name="case_hearing_date" [(ngModel)]="case.hearings[i].date" placeholder="Hearing Date" type="text" > 
+     </div>
+     <div class="input-field col s7">
+       <input name="case_hearing_comment" [(ngModel)]="case.hearings[i].comment" placeholder="Comments" type="text" class="validate">
+     </div>
 
- <div class="row">
-   <div class="input-field col s6">
-     <select id="client" name="case_client" [(ngModel)]="case.client">
-        <option value="" disabled selected>Choose client</option>
-        <option value="{{case.petitioner}}">{{case.petitioner}}</option>
-        <option value="{{case.defendant}}">{{case.defendant}}</option>
-      </select>
    </div>
  </div>
-  <div class="row">
-   <div class="input-field col s6">
-     <input name="case_petadvocate" [(ngModel)]="case.petadvocate" placeholder="Petitioner Advocate" type="text" class="validate">
-   </div>
-   <div class="input-field col s6">
-     <input name="case_petdefendant" [(ngModel)]="case.defadvocate" placeholder="Defendant Advocate" type="text" class="validate">
-   </div>
- </div>
-  <div class="row">
-   <div class="input-field col s6">
-     <input name="case_subject" [(ngModel)]="case.subject" placeholder="Subject" type="text" class="validate">
-   </div>
-   <div class="input-field col s6">
-     <input name="case_status" [(ngModel)]="case.status" placeholder="Status" type="text" class="validate">
-   </div>
- </div>
-
- <div class="row">
-   <div class="input-field col s6">
-     <input name="case_judge" [(ngModel)]="case.judge" placeholder="Judge" type="text" class="validate">
-   </div>
- </div>
-
-<!-- <div class="hearings_master" style="display:none;">
-  <div class="row hearing_row_master">
-   <div class="input-field col s5">
-     <input name="case_hearing_date" [(ngModel)]="case.hearings" placeholder="Hearing Date" type="text" class="validate">
-   </div>
-   <div class="input-field col s7">
-     <input name="case_hearing_comment" [(ngModel)]="case.hearings" placeholder="Comments" type="text" class="validate">
-   </div>
-   
- </div>
-</div> -->
-
-<div class="row">
-   <!-- <a class="btn-floating btn-large waves-effect waves-light red" href="javascript:$('.hearings_master').find('.hearing_row_master').clone().appendTo('.hearings_rows');"> -->
-   <button class="btn-floating btn-large waves-effect waves-light red" (click)="addHearing(); $event.preventDefault()">
-      <i class="material-icons">add</i>
-  </button>
-    <!-- </a> -->
- </div>
-
-<div class="hearings_rows" >
-  <div class="row" *ngFor="let hear of case.hearings; let i = index">
-   <div class="input-field col s5">
-     <input name="case_hearing_date" [(ngModel)]="case.hearings[i].date" placeholder="Hearing Date" type="text" > <!--  -->
-   </div>
-   <div class="input-field col s7">
-     <input name="case_hearing_comment" [(ngModel)]="case.hearings[i].comment" placeholder="Comments" type="text" class="validate">
-   </div>
-   
- </div>
-</div>
 
  <div class="row">
   <div class="input-field col s12">
-     <textarea name="case_judgement" [(ngModel)]="case.judgement" class="materialize-textarea" placeholder="Judgement"></textarea>
-   </div>
+   <textarea name="case_judgement" [(ngModel)]="case.judgement" class="materialize-textarea" placeholder="Judgement"></textarea>
+ </div>
 </div>
 
 <div class="row">
-<div class="input-field col s12">
-<input id="att_file" type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." multiple />
-</div>
+  <div class="input-field col s12">
+    <input id="att_file" type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." multiple />
+  </div>
 </div>
 
-  <div class="row">
-    <button id ='submitbtn' type="submit" class="btn waves-effect waves-light green">
-        <i class="material-icons left">done</i>Save
-      </button>
-  </div>
+<div class="row">
+  <button id ='submitbtn' type="submit" class="btn waves-effect waves-light green">
+    <i class="material-icons left">done</i>Save
+  </button>
+</div>
 </form>
 </div>
+</div>
+ -->
+<section class="content">
+  <div class="box box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title">Case Details</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+      </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Court</label>
+            <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" [(ngModel)]="case.court">
+              <option selected="selected" value="" disabled>Select Court</option>
+              <option *ngFor="let court of courts" [ngValue]="court.shorttext">{{court.title}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Case Type</label>
+            <input type="text" class="form-control" placeholder="Enter Case Type" [(ngModel)]="case.type">
+          </div>  
+          <div class="form-group">
+            <label >Case No.</label>
+            <input type="text" class="form-control"  placeholder="Enter Case Number" [(ngModel)]="case.id">
+          </div>  
+          <div class="form-group">
+            <label >Dairy No.</label>
+            <input type="text" class="form-control" placeholder="Enter Dairy Number" [(ngModel)]="case.dairy_no">
+          </div> 
+          <div class="form-group">
+            <label >Year</label>
+            <input type="number" min="1900" max="{{max_year}}" class="form-control"  placeholder="Enter Year" [(ngModel)]="case.year">
+          </div> 
+          <div class="form-group">
+            <label >Petitioner</label>
+            <input type="text" class="form-control"  placeholder="Enter Name" [(ngModel)]="case.petitioner">
+          </div>  
+          <div class="form-group">
+            <label >Defendent</label>
+            <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="case.defendant">
+          </div>  
+          <div class="form-group">
+            <label>Client</label>
+            <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" [(ngModel)]="case.client">
+              <option selected="selected" value="" disabled>Select Client</option>
+              <option value="{{case.petitioner}}">{{case.petitioner}}</option>
+              <option value="{{case.defendant}}">{{case.defendant}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Petitioner Advocate</label>
+            <input type="text" class="form-control"  placeholder="Enter Name" [(ngModel)]="case.petadvocate">
+          </div>  
+          <div class="form-group">
+            <label >Defendent Advocate</label>
+            <input type="text" class="form-control"  placeholder="Enter Name" [(ngModel)]="case.defadvocate">
+          </div>  
+          <div class="form-group">
+            <label >Subject</label>
+            <input type="text" class="form-control"  placeholder="Enter Case Subject" [(ngModel)]="case.subject">
+          </div>  
+          <div class="form-group">
+            <label >Status</label>
+            <input type="text" class="form-control"  placeholder="Enter Current Status of Case" [(ngModel)]="case.status">
+          </div>  
+          <div class="form-group">
+            <label >Jury</label>
+            <input type="text" class="form-control"  placeholder="Enter Name of Jury" [(ngModel)]="case.judge">
+          </div>  
+
+          <button class="btn btn-primary" (click)="addHearing(); $event.preventDefault()">
+            <i class="fa fa-plus"></i>
+          </button>
+
+          <div class="hearings_rows" >
+            <div class="row" *ngFor=" let hear of case.hearings; let i = index ">
+
+              <div class="col-xs-3">
+               <input name="case_hearing_date" [(ngModel)]="case.hearings[i].date" placeholder="Hearing Date" type="text" class="form-control"> 
+             </div>
+             <div class="col-xs-9">
+               <input name="case_hearing_comment" [(ngModel)]="case.hearings[i].comment" placeholder="Comments" type="text" class="form-control">
+             </div>
+             <br>
+           </div>
+         </div>
+         
+         <div class="form-group">
+          <label>Judgement Description</label>
+          <textarea class="form-control" rows="5" [(ngModel)]="case.judgement" placeholder="Enter Judgement details"></textarea >
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputFile">Attachments</label>
+            
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+              <span class="btn btn-default btn-file"><span>Choose file</span><input type="file" (change)="fileChangeEvent($event)" multiple /></span>
+              <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>
+            </div>
+            <p class="help-block">You can select multiple attachments.</p>
+          </div>
+
+          <button type="button" (click)="onSubmit()" class="btn btn-block btn-success"><i class="fa fa-check"></i> Submit</button>
+          <!-- /.form-group -->
+        </div>
+        <!-- /.col -->
+
+      </div>
+      <!-- /.row -->
+
+
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      Please verify all information before submitting.
+    </div>
+  </div>
+</section>
