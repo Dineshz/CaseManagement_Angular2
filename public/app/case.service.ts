@@ -29,9 +29,9 @@ export class CaseService {
     return this._http.get(this._url +'?id=' + xcase._id).map(res => res.json());
   }
 
-  // editCourt(court : Court) : Observable<Court[]>{
-  // 	return this._http.put(this._url,court).map(res => res.json());
-  // }
+  editCase(xcase : Case) : Observable<Case>{
+  	return this._http.put(this._url,xcase).map(res => res.json());
+  }
 
   // delCourt(court : Court)  : Observable<Court[]> {
   // 	return this._http.delete(this._url +'?id=' + court._id).map(res => res.json());

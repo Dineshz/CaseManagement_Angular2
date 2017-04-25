@@ -193,25 +193,26 @@ router.put('/xcases',function(req, res){
 	console.log('------------------');
 	console.log(req.body);
 	console.log('------------------');
-	Case.findById(req.query.id, function(err, lcase){
-		lcase.court = req.body.ccourt;
-		lcase.type = req.body.ctype;
-		lcase.id = req.body.cid;
-		lcase.dairy_no = req.body.cdairy_no;
-		lcase.year = req.body.cyear;
-		lcase.petitioner = req.body.cpetitioner;
-		lcase.defendant = req.body.cdefendant;
-		lcase.client = req.body.cclient;
+	Case.findById(req.body._id, function(err, lcase){
+		 
+		lcase.court = req.body.court;
+		lcase.type = req.body.type;
+		lcase.id = req.body.id;
+		lcase.dairy_no = req.body.dairy_no;
+		lcase.year = req.body.year;
+		lcase.petitioner = req.body.petitioner;
+		lcase.defendant = req.body.defendant;
+		lcase.client = req.body.client;
 		lcase.petadvocate = req.body.petadvocate;
 		lcase.defadvocate = req.body.defadvocate;
-		lcase.subject = req.body.csubject;
-		lcase.status = req.body.cstatus;
-		lcase.judge = req.body.cjudge;
+		lcase.subject = req.body.subject;
+		lcase.status = req.body.status;
+		lcase.judge = req.body.judge;
 		lcase.lastupdated = new Date();
-		lcase.hearings = req.body.chearings;
-		lcase.judgement = req.body.cjudgement;
-		lcase.pdf = !!req.file.path ? req.file.path : "Nil";
-
+		lcase.hearings = req.body.hearings;
+		lcase.judgement = req.body.judgement;
+		lcase.pdf = req.body.pdf;
+	
 		lcase.save(function(err,lcase){
 		if(err) res.send(console.log(err));
 		res.send(lcase);

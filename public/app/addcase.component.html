@@ -99,7 +99,7 @@
 <div class="hearings_rows" >
   <div class="row" *ngFor="let hear of case.hearings; let i = index">
    <div class="input-field col s5">
-     <input name="case_hearing_date" [(ngModel)]="case.hearings[i].date" placeholder="Hearing Date" type="text" >
+     <input name="case_hearing_date" [(ngModel)]="case.hearings[i].date" placeholder="Hearing Date" type="text" > <!--  -->
    </div>
    <div class="input-field col s7">
      <input name="case_hearing_comment" [(ngModel)]="case.hearings[i].comment" placeholder="Comments" type="text" class="validate">

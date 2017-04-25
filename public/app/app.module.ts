@@ -7,11 +7,12 @@ import { AppComponent }  		from './app.component';
 import { NavBarComponent } 		from './navbar.component';
 import {CourtsService} from './courts.service';
 import {CaseService} from './case.service';
+import {UpdateCaseService} from './updatecase.service';
 @NgModule({
   imports:      [ BrowserModule, AppRoutingModule, HttpModule, FormsModule],
   declarations: [ AppComponent, NavBarComponent],
   bootstrap:    [ AppComponent],
-  providers :   [ CourtsService, CaseService ]
+  providers :   [ CourtsService, CaseService, UpdateCaseService ]
 })
 
 export class AppModule { 

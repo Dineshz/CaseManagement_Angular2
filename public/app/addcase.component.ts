@@ -1,12 +1,12 @@
 import {Component, AfterViewInit, DoCheck,AfterContentInit, OnChanges, Input} from '@angular/core';
-import {OnInit} from '@angular/core';
+import {OnInit, OnDestroy} from '@angular/core';
 import {Case} from './case';
 import {CourtsService} from './courts.service';
 import {CaseService} from './case.service';
 import {Court} from './court';
 import { FileUploader } from '../node_modules/ng2-file-upload';
 import {SelectModule} from '../node_modules/ng2-select';
-
+import {UpdateCaseService} from './updatecase.service';
 
 @Component({	  
 	selector : 'case',
@@ -14,7 +14,7 @@ import {SelectModule} from '../node_modules/ng2-select';
 	// providers : [CourtsService],
 })
 
-export class AddCaseComponent implements OnInit {  //, DoCheck, 
+export class AddCaseComponent implements OnInit, OnDestroy {  //, DoCheck, 
   
   case : Case;
   court : Court;
@@ -28,27 +28,12 @@ export class AddCaseComponent implements OnInit {  //, DoCheck,
     comment : string
   }
   // public uploader:FileUploader = new FileUploader({url: '/api'});
-  constructor(private courtsService: CourtsService, private caseService: CaseService) {
+  constructor(private courtsService: CourtsService, 
+              private caseService: CaseService,
+              private updateCaseService: UpdateCaseService) {
 
-    this.case = {
-      court : '',
-      type : '',
-      id : '',
-      dairy_no : '',
-      year : new Date().getFullYear(),
-      petitioner : '',
-      defendant : '',
-      client : '',
-      defadvocate : '',
-      petadvocate : '',
-      subject : '',
-      status : '',
-      judge : '',
-      lastupdated : '',
-      hearings : [],
-      judgement : '',
-      pdf : []
-    };
+    this.case = this.updateCaseService.value;
+    console.log(this.case);
     this.court = {
       
       title: '',
@@ -56,10 +41,8 @@ export class AddCaseComponent implements OnInit {  //, DoCheck,
       ptitle: "Petitioner",
       dtitle: "Defendant",
     }
+    if(this.case.hearings.length == 0) this.addHearing();
     
-    this.addHearing();
-    
-    // this.filesToUpload = [];
   }
 
   addHearing(){
@@ -89,7 +72,15 @@ export class AddCaseComponent implements OnInit {  //, DoCheck,
     while(!this.isFileUploaded);
     console.log("onSubmit");
     // console.log(this.case);
-    this.caseService.addCase(this.case).subscribe(xcase => console.log(xcase));
+    console.log(this.case._id);
+    if(this.case._id){
+      console.log("editCAse");
+      this.caseService.editCase(this.case).subscribe(xcase => console.log(xcase));
+    }else{
+       console.log("addCAse");
+       this.caseService.addCase(this.case).subscribe(xcase => console.log(xcase)); 
+    }
+    
     this.clear();
   }
   
@@ -118,10 +109,8 @@ export class AddCaseComponent implements OnInit {  //, DoCheck,
     // setTimeout(() => {
     console.log("getCourts called!");
   	this.courtsService.getCourts().subscribe(courts => {
-      this.isLoading = false;
       this.courts = courts;
-      console.log(courts);
-      
+      this.isLoading = false;
     });
      // }, 3000);
   }
@@ -162,46 +151,25 @@ export class AddCaseComponent implements OnInit {  //, DoCheck,
   myReader.readAsDataURL(file);
 }
 
-  // fileChangeEvent(fileInput: any){
-  //       this.filesToUpload = <Array<File>> fileInput.target.files;
-  //   }
-
-  //   makeFileRequest(url: string, params: Array<string>, files: Array<File>) {
-  //       return new Promise((resolve, reject) => {
-  //           var formData: any = new FormData();
-  //           var xhr = new XMLHttpRequest();
-  //           formData.append("cpdf", files[0], files[0].name);
-  //           console.log(formData["cpdf"]);
-  //           // for(var i = 0; i < files.length; i++) {
-  //           //     formData.append("uploads[]", files[i], files[i].name);
-  //           //     console.log("Inside loop");
-  //           //     console.log(formData);
-  //           // }
-  //           xhr.onreadystatechange = function () {
-  //               if (xhr.readyState == 4) {
-  //                   if (xhr.status == 200) {
-  //                       resolve(JSON.parse(xhr.response));
-  //                   } else {
-  //                       reject(xhr.response);
-  //                   }
-  //               }
-  //           }
-  //           xhr.open("POST", url, true);
-  //           xhr.setRequestHeader("enctype", "multipart/form-data");
-  //           xhr.setRequestHeader("Cache-Control", "no-cache");
-  //           xhr.setRequestHeader("Cache-Control", "no-store");
-  //           xhr.setRequestHeader("Pragma", "no-cache");
-  //           xhr.send(formData);
-  //       });
-  //   }
-
-//   upload() {
-//         this.makeFileRequest("/upload", [], this.filesToUpload).then((result) => {
-//           console.log("Result : ");
-//             console.log(result);
-//         }, (error) => {
-//           console.log("ERROR : ");
-//             console.error(error);
-//         });
-//     }
+  ngOnDestroy(){
+    this.updateCaseService.value = {
+      court : '',
+      type : '',
+      id : '',
+      dairy_no : '',
+      year : new Date().getFullYear(),
+      petitioner : '',
+      defendant : '',
+      client : '',
+      defadvocate : '',
+      petadvocate : '',
+      subject : '',
+      status : '',
+      judge : '',
+      lastupdated : '',
+      hearings : [],
+      judgement : '',
+      pdf : []
+    };
+  }
 }
